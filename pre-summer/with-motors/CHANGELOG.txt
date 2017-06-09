@@ -1,0 +1,11 @@
+v1 - First iteration
+  - Using running code from project as a base
+  - Sensor code is under the Stage; consider moving it
+  - Things learned:
+      - Use join(S1, EV3TOUCH) instead of join(S1, TOUCH).
+          - (Prepend sensor types with EV3 when using EV3 sensors.)
+      - Sensor setup should all go under the READY broadcast
+      - Specify sensor types before the SETUP broadcast
+
+v2
+  - Moved update loop to the touch sensor sprite
