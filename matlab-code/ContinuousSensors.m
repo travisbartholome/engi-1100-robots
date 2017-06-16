@@ -32,11 +32,15 @@ function ContinuousSensors() % Call this from the command window
         fprintf('Ultrasonic sensor: %f \n\n', readDistance(myUS));
     end
     
-    % Cleanup when the timer stops - to avoid potential errors where the
-    % connection to the EV3 brick persists. I only had this problem once so
-    % far, but I ended up having to restart MATLAB to fix it.
+    % Cleanup when the timer stops - to avoid errors where the
+    % connection to the EV3 brick persists. I've been having to restart
+    % MATLAB to fix this issue.
     function StopTimer
         clear myLEGO;
         disp('EV3 connection cleared.');
+        delete(myTimer);
+        % If this doesn't work, try using `clear all` in the command
+        % window, maybe? I haven't tested that since this seems to be
+        % working, but the occasion may arise.
     end
 end
