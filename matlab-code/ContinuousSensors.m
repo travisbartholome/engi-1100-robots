@@ -39,8 +39,7 @@ function ContinuousSensors() % Call this from the command window
         clear myLEGO;
         disp('EV3 connection cleared.');
         delete(myTimer);
-        % If this doesn't work, try using `clear all` in the command
-        % window, maybe? I haven't tested that since this seems to be
-        % working, but the occasion may arise.
+        % In case of error, even though this code seems to fix the problem:
+        % disconnect the EV3 (from USB), run `clear all`, then reconnect.
     end
 end
