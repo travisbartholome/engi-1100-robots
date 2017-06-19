@@ -30,24 +30,30 @@ function FigureTest() % Run this in the command window
     
     % Define necessary functions
     function KeyPressCallback(~, data)
+        % data.Key contains which key was pressed
         switch data.Key
             case 'uparrow'
+                % Drive forward
                 leftMotor.Speed = 20;
                 rightMotor.Speed = 20;
                 start(leftMotor);
                 start(rightMotor);
             case 'downarrow'
+                % Drive backward
                 leftMotor.Speed = -20;
                 rightMotor.Speed = -20;
                 start(leftMotor);
                 start(rightMotor);
             case 'q'
+                % Open claw
                 clawMotor.Speed = 20;
                 start(clawMotor);
             case 'e'
+                % Close claw
                 clawMotor.Speed = -20;
                 start(clawMotor);
             case 'space'
+                % Stop everything
                 stop(leftMotor);
                 stop(rightMotor);
                 stop(clawMotor);
