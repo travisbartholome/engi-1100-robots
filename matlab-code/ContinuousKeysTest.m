@@ -38,8 +38,9 @@ function ContinuousKeysTest() % Run this in the command window
     truesize(controlFigure);
     
     % Define control functions
-    % MotorControl will be called to modify the state variables (which keys
-    %   are pressed) any time a key is pressed or released.
+    % MotorControl will be called to modify the motors based on the state
+    %   variables (which keys are pressed).
+    % This happens any time a key is pressed or released.
     function MotorControl()
         % Control wheel movement
         if upArrowPressed
