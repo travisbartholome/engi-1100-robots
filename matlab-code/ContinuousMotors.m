@@ -30,6 +30,7 @@ function ContinuousMotors() % Run this in the command window
     powerLevel2 = 45;
     powerLevel3 = 70;
     motorPower = powerLevel1; % Initially set a low motor power
+    clawPower = 35; % Just keep the claw power constant
     
     % Load and display instruction, create figure
     % Any image would work here:
@@ -86,17 +87,18 @@ function ContinuousMotors() % Run this in the command window
             rightMotor.Speed = 0;
         end
         
-        % Control claw movement:
+        % Control claw movement
         if qPressed
             if ePressed
+                % If both claw keys are pressed, don't move the claw.
                 clawMotor.Speed = 0;
             else
                 % Open claw
-                clawMotor.Speed = motorPower;
+                clawMotor.Speed = clawPower;
             end
         elseif ePressed
             % Close claw
-            clawMotor.Speed = -motorPower;
+            clawMotor.Speed = -clawPower;
         else
             % If no claw keys are pressed, stop the claw.
             clawMotor.Speed = 0;
