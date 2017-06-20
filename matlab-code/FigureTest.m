@@ -20,6 +20,7 @@ function FigureTest() % Run this in the command window
     clawMotor = motor(myLEGO, clawMotorPort);
     
     % Load and display instruction, create figure
+    % Any image would work here:
     instructionImage = imread('../resources/figure_test_driving_instructions.png');
     % Set the figure to listen for keypresses and use a callback
     % Basic callback: @(fig,data) disp(data.Key)
