@@ -32,5 +32,6 @@
 %}
 
 myLEGO = legoev3('Bluetooth', 'COM3');
-disp(mylego)
-% June 20, 2017 - As of right now, this is *not* working for me. -Travis
+% myLEGO = legoev3('bt', '0016534EE751'); % Also tried this, still failing
+disp(myLEGO)
+% June 22, 2017 - As of right now, this is *not* working for me. -Travis
