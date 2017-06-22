@@ -17,26 +17,55 @@ function PongGame()
     cpuX = canvasWidth - fieldMargin;
     cpuY = canvasHeight/2;
     paddleLength = 50;
+    paddleMoveDistance = 6;
     ballX = canvasWidth/2;
     ballY = canvasHeight/2;
-    ballSpeedX = 0; % Note: these initial speeds will have to change.
-    ballSpeedY = 0;
+    ballSpeedX = 10; % Note: these initial speeds will have to change.
+    ballSpeedY = 25;
 
     % Set up the figure window
-    gameFigure = figure('KeyPressFcn', @KeyPressCb, ...
-        'KeyReleaseFcn', @KeyReleaseCb);
-    axis([0 canvasWidth 0 canvasHeight]);
+    gameFigure = figure('KeyPressFcn', @KeyPressCb);
     
     % Functions
     function UpdateGame()
         % Update game state
         % ***(Some stuff here, ball and CPU paddle movement.)***
+        ballX = ballX + ballSpeedX;
+        if ballX < playerX
+            if (ballY < playerY + paddleLength/2 && ...
+                    ballY > playerY - paddleLength/2)
+                ballSpeedX = -ballSpeedX;
+            else
+                close(gameFigure);
+                disp('* * * * * * * *');
+                disp('* CPU wins... *');
+                disp('* * * * * * * *');
+            end
+        elseif ballX > cpuX
+            if (ballY < cpuY + paddleLength/2 && ...
+                    ballY > cpuY - paddleLength/2)
+                ballSpeedX = -ballSpeedX;
+            else
+                close(gameFigure);
+                disp('* * * * * * * * *');
+                disp('* Player wins!  *');
+                disp('* * * * * * * * *');
+            end
+        end
+        if ballY < fieldMargin || ballY > (canvasHeight - fieldMargin)
+            ballSpeedY = -ballSpeedY;
+        end
+        ballY = ballY + ballSpeedY;
+        % ***(Still need CPU paddle movement.)***
+        
         
         % Update the plot
-        hold on;
+        hold off;
         % Plot the ball
-        plot(canvasWidth/2, canvasHeight/2, 'ko', ...
-            'MarkerFaceColor', 'r', 'LineWidth', 1.5, 'Color', 'r');
+        plot(ballX, ballY, 'ko', 'MarkerFaceColor', 'r', ...
+            'LineWidth', 1.5, 'Color', 'r');
+        hold on;
+        axis([0 canvasWidth 0 canvasHeight]);
         % Player's paddle
         fplot(@(t) t.*0 + playerX, @(t) t.*1, ...
             [playerY - paddleLength/2, playerY + paddleLength/2], ...
@@ -49,14 +78,25 @@ function PongGame()
     end
     
     function KeyPressCb(~, data)
+        needUpdate = 1;
         switch data.Key
             % Handle keypresses
+            case 'uparrow'
+                if playerY < (canvasHeight - paddleLength / 2)
+                    playerY = playerY + paddleMoveDistance;
+                end
+            case 'downarrow'
+                if playerY > (paddleLength / 2)
+                    playerY = playerY - paddleMoveDistance;
+                end
+            otherwise
+                % Don't update for irrelevant keypresses.
+                needUpdate = 0;
         end
-    end
-
-    function KeyReleaseCb(~, data)
-        % Do I really even want a KeyRelease listener for this game?
-        disp(data.Key); % Temporary.
+        
+        if needUpdate
+            UpdateGame();
+        end
     end
 
     % Start game
